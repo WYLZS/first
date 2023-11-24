@@ -1,0 +1,19 @@
+//100到900回文数
+#include<stdio.h>
+int main()
+{
+	int a1,a2,a3,n;
+	for(a1=1;a1<9;a1++)
+	{
+		for(a2=0;a2<9;a2++)
+		{
+			for(a3=0;a3<9;a3++)
+			{
+				n=a1*100+a2*10+a3;
+				if(n<=900&&a1==a3)
+					printf("%d ",n);
+			}
+		}
+	}
+	return 0; 
+}
