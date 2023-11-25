@@ -1,0 +1,46 @@
+//计算机
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+int main()
+{
+	double a,b,x,n;
+	int y;
+	char f;
+	for(;;)
+	{
+		system("cls");//清空屏幕 
+		printf("哦呀嘿牌计算器欢迎您\n该计算器可以计算加+，减-，乘*，除/，乘方^。\n请输入您要计算的式子；\n");
+		scanf("%lf%c%lf",&a,&f,&b);
+		switch(f)//判断计算类型 
+		{
+			case '+':x=a+b;break;
+			case '-':x=a-b;break;
+			case '*':x=a*b;break;
+			case '/':x=a/b;break;
+			case '^':x=pow(a,b);break;
+		}
+		printf("%lf%c%lf=%lf\n",a,f,b,x);
+		printf("亲，继续计算请输入0\n"); //更加人性化 
+		scanf("%lf",&n);
+		if(n==0)
+			continue;
+		else
+		{
+			printf("记得好评呦亲！\n");
+			printf("★★★★★:您要点亮几颗星？\n");//独特的反馈机制 
+			scanf("%d",&y);
+			switch(y)
+			{
+				case 1:printf("这个仇我记下了！");break;
+				case 2:printf("好家伙，是我的服务不周到吗？");break;
+				case 3:printf("勉勉强强吧...");break;
+				case 4:printf("亲，谢谢您的好评！");break;
+				case 5:printf("感谢您的好评！！！");break;
+				default:printf("识别错误！？");break;
+			}
+			break;
+		}
+	}
+	 return 0;
+} 
