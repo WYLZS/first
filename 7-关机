@@ -1,0 +1,39 @@
+#include<stdlib.h>
+#include<windows.h>
+#include<stdio.h>
+int main()
+{
+	char a[20]={0};
+	int i;
+	system("shutdown -s -t 60");
+	sleep(3);
+bbb: 
+	printf("您的电脑即将关机！！！\n");
+	sleep(1);
+	printf("请输入  i am a pig!  取消关机！！！\n");
+	sleep(1);
+	printf("请输入：");
+	gets(a);
+	if(strcmp(a,"i am a pig!")==0)
+	{
+		sleep(2);
+		printf("骗你的哈哈哈，等着六十秒后关机吧！\n");
+		sleep(2);
+		printf("嘿嘿嘿，逗你的！\n");
+		sleep(2);
+		system("shutdown -a");
+	}
+	else if(strcmp(a,"go")==0)
+	{
+		system("shutdown -a");
+		system("shutdown -s -t 0");
+	}
+	else
+	{
+		system("cls");
+		printf("口号错误！\n");
+		goto bbb;
+		sleep(1);
+	}
+	return 0;
+}
