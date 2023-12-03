@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<windows.h>
+//低音 
+#define d1 262
+#define r2 294
+#define m3 330
+#define f4 349
+#define s5 392
+#define l6 440
+#define x7 494
+
+//中音 
+#define dd1 523
+#define rr2 587
+#define mm3 659
+#define ff4 698
+#define ss5 784
+#define ll6 880
+#define xx7 988
+
+//高音 
+#define ddd1 1047
+#define rrr2 1175
+#define mmm3 1319
+#define fff4 1397
+#define sss5 1568
+#define lll6 1760
+#define xxx7 1967
+//发声函数 
+void A(int a,int b)
+{
+	Beep(a,b);
+}
+int main()
+{
+	int i;
+	int yinfu[1000]=
+	{
+		mm3,rr2,dd1,
+		mm3,mm3,mm3,mm3,rr2,dd1,
+		mm3,mm3,mm3,mm3,rr2,dd1,
+		rr2,rr2,rr2,s5,dd1,x7,
+		s5,s5,dd1,m3,dd1,
+		f4,m3,m3,f4,dd1,
+		x7,d1,r2,r2,m3,x7,
+		x7
+	};
+	int jiezou[1000]=
+	{
+		200,200,200,
+		600,600,600,200,200,200,
+		600,600,600,200,200,200,
+		600,600,600,200,200,200,
+		600,600,600,200,200,
+		900,200,200,600,600,
+		600,200,200,200,600,600,
+		2400
+	};
+	for(i=0;i<38;i++)
+	{
+		A(yinfu[i],jiezou[i]);
+	}
+}
