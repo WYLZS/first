@@ -1,0 +1,30 @@
+#include<stdio.h>
+
+//计算三阶矩阵对角线元素的和 
+double jisuan(double a[3][3])
+{
+	double s;
+	s=1.0*a[0][0]+a[1][1]+a[2][2]; 
+	return s; 
+}
+
+int main()
+{
+	
+	double a[3][3];
+	int i,j;
+	double sum;
+	//输入三阶矩阵
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<3;j++)
+		{
+			printf("a%d%d=",i+1,j+1);
+			scanf("%lf",&a[i][j]);
+		}
+	}
+	//输出对角线元素 
+	sum=jisuan(a);
+	printf("%lf",sum);
+	return 0;
+}
