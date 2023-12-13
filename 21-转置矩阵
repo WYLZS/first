@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+int main()
+{
+	int x,y,i,j; 
+	int a[10][10]={0};
+	int b[10][10]={0};
+	srand((unsigned)time(NULL));
+	x=rand()%10+1;
+	y=rand()%10+1;
+	for(i=0;i<x;i++)
+	{
+		for(j=0;j<y;j++)
+		{
+			a[i][j]=rand()%51;
+		}
+	}
+	printf("矩阵%d*%d\n",x,y);
+	for(i=0;i<x;i++)
+	{
+		for(j=0;j<y;j++)
+		{
+			printf("%-6d",a[i][j]);
+			b[j][i]=a[i][j];
+		}
+		printf("\n");
+	}
+	printf("转置矩阵%d*%d\n",y,x);
+	for(i=0;i<y;i++)
+	{
+		for(j=0;j<x;j++)
+		{
+			printf("%-6d",b[i][j]);
+		}
+		printf("\n");
+	}
+	
+}
