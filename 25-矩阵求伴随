@@ -1,0 +1,69 @@
+//对矩阵求其伴随矩阵
+#include<stdio.h>
+
+int d(int i)//换位置滴 
+{
+	if(i>2)
+	{
+		i=i-3;
+	}
+	return i;
+}
+
+
+int hei(int (*a)[3],int j,int i)//计算代数余子式 
+{
+	int e,f,x,y,sum;
+	int c[2][2]={0};
+	for(x=0;x<2;x++)
+	{
+		for(y=0;y<2;y++)
+		{
+			e=j+1+x;
+			f=i+1+y;
+			e=d(e);
+			f=d(f);
+			sum=*(a[e]+f);
+			c[x][y]=sum;
+		}
+	}
+	sum=c[0][0]*c[1][1]-c[0][1]*c[1][0];
+	return sum;
+}
+
+
+
+int main()
+{
+	int i,j,n;
+	int a[3][3]={0};
+	int b[3][3]={0}; 
+	n=3; 
+	printf("请输入一个三阶方阵:\n");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			scanf("%d",&a[i][j]);
+		}
+	}
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			b[i][j]=hei(&a[0][0],j,i);
+		}
+	}
+	
+	printf("它的伴随矩阵是：\n");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			printf("%-3d ",b[i][j]);
+		}
+		printf("\n");
+	}
+	
+	return 0;
+}
