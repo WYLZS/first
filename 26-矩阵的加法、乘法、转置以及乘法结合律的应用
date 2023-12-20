@@ -1,0 +1,164 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+//初始化
+void chu(int (*a)[3])
+{
+	int i,j;
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<3;j++)
+		{
+			a[i][j]=0;
+		}
+	}
+}
+ 
+//输出矩阵 
+void S(int (*a)[3])
+{
+	int i,j;
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<3;j++)
+		{
+			printf("%-6d",a[i][j]);
+		}
+		printf("\n");
+	}
+}
+//随机生成三阶矩阵 
+void A(int (*a)[3],char w)
+{
+	int i,j;
+	for(i=0;i<3;i++)
+	{
+		
+		for(j=0;j<3;j++)
+		{
+			
+			a[i][j]=rand()%10;
+		}
+	}
+	printf("随机生成三阶方阵%c\n",w);
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<3;j++)
+		{
+			printf("%-4d",a[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+//转置矩阵---将a的转置矩阵放于b中 
+void zhuan(int (*b)[3],int (*a)[3]) 
+{
+	int i,j;
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<3;j++)
+		{
+			b[j][i]=a[i][j];
+		}
+	}
+}
+//矩阵相乘---a乘b放于d中 
+void cheng(int (*d)[3],int (*a)[3],int (*b)[3])
+{
+	int i,j,k;
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<3;j++)
+		{
+			d[i][j]=0;
+			for(k=0;k<3;k++)
+			{
+				d[i][j]+=a[i][k]*b[k][j];
+			} 
+		}
+	}
+}
+//矩阵相加---a与b相加放d里面 
+void jia(int (*d)[3],int (*a)[3],int (*b)[3])
+{
+	int i,j;
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<3;j++)
+		{
+			d[i][j]=a[i][j]+b[i][j];
+		}
+	}
+}
+
+
+
+int main()
+{
+	int i,j,k; 
+	int a[3][3]={0};
+	int b[3][3]={0};
+	int c[3][3]={0};
+	
+	int d[3][3]={0};
+	int e[3][3]={0};
+	int f[3][3]={0};
+	//随机数种子 
+	srand((unsigned)time(NULL));
+	//生成三个随机矩阵 
+	A(a,'A');
+	A(b,'B');
+	A(c,'C'); 
+	
+	//A*B+A*C=A*(B+C)的判断 
+	printf("A*B+A*C=\n");
+	cheng(d,a,b);
+	cheng(e,a,c);
+	jia(d,d,e);
+	S(d);
+	printf("A*(B+C)=\n");
+	jia(d,b,c);
+	cheng(e,a,d);
+	S(e); 
+	printf("\n所以A*B+A*C=A*(B+C)\n\n");
+	
+	
+	//(A*B)*C=A*(B*C)的判断
+	printf("(A*B)*C=\n");
+	chu(d);
+	chu(e);
+	cheng(d,a,b);
+	cheng(e,d,c);
+	S(e);
+	printf("A*(B*C)=\n");
+	chu(d);
+	chu(e);
+	cheng(d,b,c);
+	cheng(e,a,d);
+	S(e);
+	printf("\n所以(A*B)*C=A*(B*C)\n\n");
+	
+	
+	//(A*B*C)^T=(C^T)*(B^T)*(A^T)的判断
+	printf("(A*B*C)^T=\n");
+	//此时e等于A*B*C
+	chu(d);
+	zhuan(d,e);
+	S(d);
+	printf("(C^T)*(B^T)*(A^T)=\n");
+	chu(d);
+	chu(e);
+	zhuan(e,b);
+	zhuan(f,c);
+	cheng(d,f,e);
+	chu(e);
+	chu(f);
+	zhuan(e,a);
+	cheng(f,d,e);
+	S(f);
+	printf("\n所以(A*B*C)^T=(C^T)*(B^T)*(A^T)\n\n");
+	
+	return 0; 
+}
