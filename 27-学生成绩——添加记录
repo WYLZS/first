@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<string.h>
+struct Xuesheng
+{
+    long long int xuehao;
+    char xingming[20];
+    int chengji_1;
+    int chengji_2;
+    int chengji_3;
+};
+
+//交换数据
+void abc(struct Xuesheng *a,int i)
+{
+    long long int t;
+    struct Xuesheng *b=a+i+1;
+    char c[20]={0};
+    a=a+i;
+    t=a->xuehao;
+    a->xuehao=b->xuehao;
+    b->xuehao=t;
+
+	strcpy(c,&(a->xingming[0]));
+    strcpy(&(a->xingming[0]),&(b->xingming[0]));
+    strcpy(&(b->xingming[0]),c);
+
+    t=a->chengji_1;
+    a->chengji_1=b->chengji_1;
+    b->chengji_1=t;
+
+    t=a->chengji_2;
+    a->chengji_2=b->chengji_2;
+    b->chengji_2=t;
+
+    t=a->chengji_3;
+    a->chengji_3=b->chengji_3;
+    b->chengji_3=t;
+
+}
+    
+int main()
+{
+    struct Xuesheng a[10];
+    int i,j,x,y,k[10]={0},n,w=0;
+    scanf("%d",&n);
+    for(i=0;i<=n;i++)
+    {
+        scanf("%lld",&a[i].xuehao);
+        scanf("%s",&a[i].xingming);
+        scanf("%d%d%d",&a[i].chengji_1,&a[i].chengji_2,&a[i].chengji_3);
+    }
+    for(i=0;i<n;i++)
+    {
+        if(a[n].xuehao==a[i].xuehao)
+        {
+            printf("error!");
+            return 0;
+        }
+    }
+    for(j=0;j<n;j++)
+    {
+        for(x=0;x<n-j;x++)
+        {
+            if(a[x].xuehao>a[x+1].xuehao)
+            {
+                abc(a,x);
+            }
+        }
+    }
+    for(i=0;i<=n;i++)
+    {
+        printf("%lld %s %d %d %d\n",a[i].xuehao,a[i].xingming,a[i].chengji_1,a[i].chengji_2,a[i].chengji_3);
+    }
+    
+    return 0;
+}
