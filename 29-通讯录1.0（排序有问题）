@@ -1,0 +1,246 @@
+#include<stdio.h>
+#include<string.h>
+#include<malloc.h>
+
+#define N 20//姓名 
+#define M 50//地址 
+//结构体
+struct Lian
+{
+	char xingming[N];
+	long long int dianhua;
+	char dizhi[M];
+	struct Lian *xia;
+};
+
+//声明函数 
+void caidan();
+struct Lian* chuang();
+void liulan(struct Lian *tou);
+void guanli(struct Lian *tou);
+void g_tianjia(struct Lian *tou);
+void g_xiugai(struct Lian *tou);
+void g_shanchu(struct Lian *tou);
+void paixu(struct Lian *tou);
+void chaxun(struct Lian *tou); 
+
+int main()
+{
+	int n;
+	struct Lian *tou;
+abc:
+	caidan();
+	printf("请输入您的选择：");
+	scanf("%d",&n);
+	switch(n)
+	{
+		case 1:
+			tou=chuang();
+			break; 
+		case 2:
+			liulan(tou);
+			break;
+		case 3:
+			guanli(tou);
+			break;
+		case 4:
+			paixu(tou);
+			break;
+		case 5:
+			chaxun(tou); 
+			break;
+		case 6:
+			return 0;
+			break;
+		default:
+			printf("输入错误\n");
+			break;
+	}
+	goto abc;
+	return 0;
+}
+
+//函数
+void caidan()//菜单 
+{
+	printf("\n*********************************\n");
+	printf("**********1--创建通讯录**********\n");//
+	printf("**********2--浏览通讯录**********\n");//
+	printf("**********3--管理通讯录**********\n");//
+	printf("**********4--通讯录排序**********\n");
+	printf("**********5--查询联系人**********\n");//
+	printf("**********6--关闭通讯录**********\n");//
+	printf("*********************************\n\n");
+}
+
+struct Lian* chuang()//创建通讯录
+{
+	int i;
+	char a[N],b[M];
+	struct Lian *tou,*xia1,*xia2;
+	tou=(struct Lian*)malloc(sizeof(struct Lian));
+	tou->xia=NULL;
+	xia1=tou;
+	printf("请输入添加联系人个数：");
+	scanf("%d",&i);
+	while(i)
+	{
+		xia2=(struct Lian*)malloc(sizeof(struct Lian));
+		printf("请输入联系人姓名：");
+		scanf("%s",&(xia2->xingming));
+		printf("请输入联系人电话：");
+		scanf("%lld",&(xia2->dianhua));
+		printf("请输入联系人地址：");
+		scanf("%s",&(xia2->dizhi));
+		printf("\n");
+		xia1->xia=xia2;
+		xia1=xia2;
+		i--;
+	}
+	xia2->xia=NULL;
+	return tou;
+}
+void liulan(struct Lian *tou)//浏览 
+{
+	int i=1;
+	struct Lian *a=tou->xia;
+	while(a!=NULL)
+	{
+		printf("第%d个联系人：",i);
+		printf("\n姓名：%s\n",a->xingming);
+		printf("电话：%lld\n",a->dianhua);
+		printf("地址：%s\n",a->dizhi);
+		printf("\n");
+		a=a->xia;
+		i++;
+	}
+}
+void guanli(struct Lian *tou)//管理 
+{
+	int i;
+	struct Lian *a=tou;
+	printf("\n*********************************\n");
+	printf("**********1--添加联系人**********\n");
+	printf("**********2--修改联系人**********\n");
+	printf("**********3--删除联系人**********\n");
+	printf("**********4--退回上一选项********\n");
+	printf("*********************************\n\n");
+	printf("请选择：");
+	scanf("%d",&i);
+	switch(i)
+	{
+		case 1:
+			g_tianjia(a);
+			break;
+		case 2:
+			g_xiugai(a);
+			break;
+		case 3:
+			g_shanchu(a);
+			break;
+		case 4:
+			return; 
+			break;
+		default:
+			printf("输入错误\n");
+			break;
+	}
+}
+void g_tianjia(struct Lian *tou)//管理——添加 
+{
+	struct Lian *xia1,*xia2;
+	xia1=tou;
+	while(1)
+	{
+		if(xia1->xia==NULL)
+		{
+			break;
+		}
+		xia1=xia1->xia;
+	}
+	xia2=(struct Lian*)malloc(sizeof(struct Lian));
+	xia1->xia=xia2;
+	xia2->xia=NULL;
+	printf("请输入联系人姓名：");
+	scanf("%s",&(xia2->xingming));
+	printf("请输入联系人电话：");
+	scanf("%lld",&(xia2->dianhua));
+	printf("请输入联系人地址：");
+	scanf("%s",&(xia2->dizhi));
+}
+void g_xiugai(struct Lian *tou)//管理——修改 
+{
+	struct Lian *xia1;
+	char x[N]={0}; 
+	xia1=tou;
+	printf("请输入您要修改的联系人姓名："); 
+	scanf("%s",&x[0]);
+	while (strcmp(xia1->xingming,x)!=0)
+	{
+		xia1=xia1->xia;
+	}
+	printf("请输入修改后的联系人姓名：");
+	scanf("%s",&(xia1->xingming));
+	printf("请输入修改后的联系人电话：");
+	scanf("%lld",&(xia1->dianhua));
+	printf("请输入修改后的联系人地址：");
+	scanf("%s",&(xia1->dizhi));
+}
+void g_shanchu(struct Lian *tou)//管理——删除 
+{
+	struct Lian *xia1,*xia2;
+	char x[N]={0};
+	printf("请输入您要删除的联系人姓名："); 
+	scanf("%s",&x[0]);
+	xia1=tou;
+	xia2=xia1->xia;
+	while(strcmp(xia2->xingming,x)!=0)
+	{
+		xia1=xia1->xia;
+		xia2=xia1->xia;
+	}
+	xia1->xia=xia2->xia;
+	free(xia2);
+	printf("删除成功！\n\n");
+}
+void paixu(struct Lian *tou)
+{
+	int i,j,k=0;
+	struct Lian *a,*b,*c;
+	a=tou;
+	while (a->xia!=NULL)
+	{
+		k++;
+		a=a->xia;
+	}
+	a=tou;
+	for(i=0;i<k;i++)
+	{
+		for(j=0;j<k-1-i;j++)
+		{
+			b=a->xia;
+			if(strcmp(a->xingming,b->xingming)>0)
+			{
+				c=a->xia;
+				a->xia=b->xia;
+				b->xia=c;
+			}
+		}
+	}
+	printf("排序成功！");
+}
+void chaxun(struct Lian *tou)
+{
+	struct Lian *a;
+	char x[N]={0};
+	printf("请输入您要查询的联系人姓名：");
+	scanf("%s",&x[0]);
+	a=tou;
+	while(strcmp(a->xingming,x)!=0)
+	{
+		a=a->xia;
+	}
+	printf("\n姓名：%s\n",a->xingming);
+	printf("电话：%lld\n",a->dianhua);
+	printf("地址：%s\n",a->dizhi);
+}
