@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<string.h>
+//按生日排序——年龄从大到小 
+struct P
+{
+    char xm[10];//姓名 
+    long long int shr;//生日 
+    char dh[17];//电话 
+};
+//输入 
+void am(struct P *b,int i)
+{
+    scanf("%s",&((b+i)->xm));
+    scanf("%lld",&((b+i)->shr));
+    scanf("%s",&((b+i)->dh));
+}
+//交换 
+void bm(struct P *a,int j)
+{
+    struct P c,*b;
+    a=a+j;
+    b=a+1;
+    strcpy(c.xm,a->xm);
+    c.shr=a->shr;
+    strcpy(c.dh,a->dh);
+    
+    strcpy(a->xm,b->xm);
+    strcpy(b->xm,c.xm);
+    a->shr=b->shr;
+    b->shr=c.shr;
+    strcpy(a->dh,b->dh);
+    strcpy(b->dh,c.dh);
+    
+}
+
+int main()
+{
+    int i,j,n;
+    struct P b[10];
+    scanf("%d",&n);
+    //赋值 
+    for(i=0;i<n;i++)
+    {
+        am(b,i);
+    }
+    //冒泡排序 
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n-i-1;j++)
+        {
+            if(b[j].shr>b[j+1].shr)
+            {
+                bm(b,j);
+            }
+        }
+    }
+    //输出 
+    for(i=0;i<n;i++)
+    {
+        printf("%s %lld %s\n",b[i].xm,b[i].shr,b[i].dh);
+    }
+    return 0;
+}
