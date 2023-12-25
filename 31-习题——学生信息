@@ -1,0 +1,64 @@
+#include<stdio.h>
+struct Xuesheng
+{
+	long long int xuehao;
+	char xingming[20];
+	int chengji_1;
+	int chengji_2;
+	int chengji_3;
+};
+void shuru(struct Xuesheng *a)
+{
+	int i;
+	for(i=0;i<3;i++)
+	{
+		printf("姓名：");
+		scanf("%s",&(a[i].xingming));
+		printf("学号：");
+		scanf("%lld",&(a[i].xuehao));
+		printf("成绩1：");
+		scanf("%d",&(a[i].chengji_1));
+		printf("成绩2：");
+		scanf("%d",&(a[i].chengji_2));
+		printf("成绩3：");
+		scanf("%d",&(a[i].chengji_3));
+		printf("\n"); 
+	}
+}
+void shuchu(struct Xuesheng *a)
+{
+	int i,j,k,sum1=0,sum2=0,sum3=0,sum[3];
+	for(i=0;i<3;i++)
+	{
+		sum[i]=a[i].chengji_1+a[i].chengji_2+a[i].chengji_3;
+		sum1+=a[i].chengji_1; 
+		sum2+=a[i].chengji_2;
+		sum3+=a[i].chengji_3;
+	}
+	printf("成绩1平均分数：%d\n",sum1);
+	printf("成绩2平均分数：%d\n",sum2);
+	printf("成绩3平均分数：%d\n\n",sum3);
+	for(i=0;i<3;i++)
+	{
+		if(k<sum[i])
+		{
+			k=sum[i];
+			j=i;
+		}
+	}
+	printf("***成绩最高者***\n");
+	printf("姓名：%s\n",a[j].xingming);
+	printf("学号：%lld\n",a[j].xuehao);
+	printf("成绩1：%d\n",a[j].chengji_1);
+	printf("成绩2：%d\n",a[j].chengji_2);
+	printf("成绩3：%d\n",a[j].chengji_3);
+	printf("总成绩：%d\n",sum[j]);
+	printf("平均分数：%d\n",sum[j]/3);
+}
+int main()
+{
+	struct Xuesheng a[3];
+	shuru(a);
+	shuchu(a);
+	return 0;
+}
