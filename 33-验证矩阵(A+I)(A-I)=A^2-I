@@ -1,0 +1,126 @@
+//验证矩阵(A+I)(A-I)=A^2-I
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+#define N 4
+
+int I[4][4]={{1},{0,1},{0,0,1},{0,0,0,1}};
+//初始化
+void chu(int (*a)[N])
+{
+	int i,j;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			a[i][j]=0;
+		}
+	}
+}
+//输出
+void shuchu(int (*a)[N])
+{
+	int i,j;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			printf("%-6d",a[i][j]);
+		}
+		printf("\n");
+	}
+} 
+//随机生成三阶矩阵 
+void juzhen(int (*a)[N])
+{
+	int i,j;
+	static w=1;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			a[i][j]=rand()%10;
+		}
+	}
+	printf("随机生成第%d个四阶方阵\n",w++);
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			printf("%-4d",a[i][j]);
+		}
+		printf("\n");
+	}
+}
+//矩阵相乘---a乘b放于d中 
+void cheng(int (*d)[N],int (*a)[N],int (*b)[N])
+{
+	int i,j,k;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			d[i][j]=0;
+			for(k=0;k<N;k++)
+			{
+				d[i][j]+=a[i][k]*b[k][j];
+			} 
+		}
+	}
+}
+
+//   (A+I)(A-I)=A^2-I
+// (A+I)(A-I)
+void jisuan_1(int (*a)[N],int (*b)[N],int (*c)[N],int (*d)[N])
+{
+	int i,j;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			b[i][j]=a[i][j]+I[i][j];
+			c[i][j]=a[i][j]-I[i][j];
+		}
+	}
+	cheng(d,b,c);
+	printf("(A+I)(A-I)=\n");
+	shuchu(d);
+}
+//A^2-I
+void jisuan_2(int (*a)[N],int (*b)[N],int (*c)[N])
+{
+	int i,j;
+	cheng(b,a,a);
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			c[i][j]=b[i][j]-I[i][j];
+		}
+	}
+	printf("A^2-I=\n");
+	shuchu(c);
+	
+}
+
+int main()
+{
+	int i=3; 
+	int a[N][N]={0};
+	
+	int b[N][N]={0};
+	int c[N][N]={0};
+	int d[N][N]={0};
+abc:
+	//随机数种子
+	i--; 
+	srand((unsigned)time(NULL));
+	juzhen(a);
+	jisuan_1(a,b,c,d);
+	chu(d);
+	jisuan_2(a,b,c);
+	printf("\n");
+	if(i)
+	goto abc;
+	return 0;
+}
