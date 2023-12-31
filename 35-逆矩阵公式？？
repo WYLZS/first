@@ -1,0 +1,178 @@
+//验证det(A+B)=det(A)+det(B)是否成立.
+//验证det(A+B)=det(A)det(B)是否成立.
+//验证det(A-1)=(det(A))-1是否成立.
+
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+#define N 3
+
+
+//对矩阵求其伴随矩阵
+int d(int i)//换位置滴 
+{
+	if(i>2)
+	{
+		i=i-3;
+	}
+	return i;
+}
+int hei(int (*a)[N],int j,int i)//计算代数余子式 
+{
+	int e,f,x,y,sum;
+	int c[2][2]={0};
+	for(x=0;x<2;x++)
+	{
+		for(y=0;y<2;y++)
+		{
+			e=j+1+x;
+			f=i+1+y;
+			e=d(e);
+			f=d(f);
+			sum=*(a[e]+f);
+			c[x][y]=sum;
+		}
+	}
+	sum=c[0][0]*c[1][1]-c[0][1]*c[1][0];
+	return sum;
+}
+
+
+//初始化
+void chu(int (*a)[N])
+{
+	int i,j;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			a[i][j]=0;
+		}
+	}
+}
+//输出
+void shuchu(int (*a)[N])
+{
+	int i,j;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			printf("%-6d",a[i][j]);
+		}
+		printf("\n");
+	}
+} 
+//随机生成三阶矩阵 
+void juzhen(int (*a)[N])
+{
+	int i,j;
+	static char w='A';
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			a[i][j]=rand()%10;
+		}
+	}
+	printf("随机生成三阶方阵%c\n",w++);
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			printf("%-4d",a[i][j]);
+		}
+		printf("\n");
+	}
+}
+//矩阵相乘---a乘b放于d中 
+void cheng(int (*d)[N],int (*a)[N],int (*b)[N])
+{
+	int i,j,k;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			d[i][j]=0;
+			for(k=0;k<N;k++)
+			{
+				d[i][j]+=a[i][k]*b[k][j];
+			} 
+		}
+	}
+}
+
+//验证det(A+B)=det(A)+det(B)是否成立.
+//验证det(A+B)=det(A)det(B)是否成立.
+//验证det(A-1)=(det(A))-1是否成立.
+
+int jisuan(int a[3][3])
+{
+	int s;
+	s=1.0*a[0][0]*a[1][1]*a[2][2]+a[1][0]*a[2][1]*a[0][2]+a[0][1]*a[1][2]*a[2][0]-a[0][2]*a[1][1]*a[2][0]-a[1][2]*a[2][1]*a[0][0]-a[1][0]*a[0][1]*a[2][2];
+	return s; 
+}
+
+void jisuan_1(int (*a)[N],int (*b)[N],int (*c)[N])
+{
+	int i,j,k;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			c[i][j]=a[i][j]+b[i][j];
+		}
+	}
+	k=jisuan(c);
+	printf("det(A+B)=%d\n",k);
+}
+void jisuan_2(int (*a)[N],int (*b)[N],int (*c)[N])
+{
+	int i,j,k;
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			c[i][j]=a[i][j]+b[i][j];
+		}
+	}
+	shuchu(c);
+}
+
+int main()
+{
+	int i,j,k=3; 
+	int a[N][N]={0};	
+	int b[N][N]={0};
+	int c[N][N]={0};
+	int d[N][N]={0};
+	//随机数种子
+	k--; 
+	srand((unsigned)time(NULL));
+	juzhen(a);
+	juzhen(b);
+	printf("\nA+B:\n");
+	jisuan_2(a,b,c);
+	printf("\n");
+	//det(A+B)=det(A)+det(B)
+	jisuan_1(a,b,c);
+	printf("det(A)+det(B)=%d\n",(jisuan(a))+(jisuan(b)));
+	printf("det(A+B)=det(A)+det(B)不成立\n\n");
+	//det(A+B)=det(A)det(B)
+	jisuan_1(a,b,c);
+	printf("det(A)*det(B)=%d\n",(jisuan(a))*(jisuan(b)));
+	printf("det(A+B)=det(A)det(B)不成立\n\n");
+	
+	//det(A-1)=(det(A))-1
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			d[i][j]=hei(a,j,i);
+		}
+	}
+	printf("det(A^-1)=%d\n",jisuan(d));
+	printf("(det(A))^-1=%lf\n",double(1.0/jisuan(a)));
+	printf("det(A-1)=(det(A))-1不成立\n");
+	return 0;
+}
