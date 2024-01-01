@@ -1,0 +1,26 @@
+#include<stdio.h>
+int main()
+{
+    char a[1000]={0};
+    int N,i;
+    gets(a);
+    scanf("%d",&N);
+    for(i=0;;i++)
+    {
+        if(a[i]==0)
+            break;
+    }
+    if((N-i)>0)
+        N=N-i;
+    for(i=N;;i++)
+    { 
+        if(a[i]==0)
+            break;
+        printf("%c",a[i]);
+    }
+    for(i=0;i<N;i++)
+    {
+        printf("%c",a[i]);
+    }
+    return 0;
+}
