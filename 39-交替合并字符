@@ -1,0 +1,27 @@
+#include<stdio.h>
+int main()
+{
+    int i,j;
+    char w1[100]={0},w2[100]={0},w3[200]={0};
+    scanf("%s",w1);
+    scanf("%s",w2);
+    for(j=0,i=0;;i++)
+    {
+        if(w1[i]!=0)
+        {
+            w3[j]=w1[i];
+            j++;
+        }
+        if(w2[i]!=0)
+        {
+            w3[j]=w2[i];
+            j++;
+        }
+        if(w1[i]==0&&w2[i]==0)
+        {
+            break;
+        }
+    }
+    printf("%s",w3);
+    return 0;
+}
